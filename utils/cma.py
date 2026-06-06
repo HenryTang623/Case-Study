@@ -85,9 +85,26 @@ def expected_returns(excess_df):
 # Covariance
 # ----------------------------------------------------------------------------
 def covariance(excess_df):
-    """
-    Ledoit-Wolf shrunk covariance (annualized).
-    """
+    """Ledoit-Wolf shrunk covariance (annualized)."""
     lw = LedoitWolf().fit(excess_df.values)
     lw_df = pd.DataFrame(lw.covariance_ * 12, index=excess_df.columns, columns=excess_df.columns)
     return lw_df
+
+# ----------------------------------------------------------------------------
+# Benchmark wt
+# ----------------------------------------------------------------------------
+def benchmark_weights():
+    """60/40: 60% split equally across 3 equity sleeves, 40% across 3 FI sleeves."""
+    w = {x: 0.6 / 3 for x in EQUITY}
+    w.update({x: 0.4 / 3 for x in FIXED_INCOME})
+    return pd.Series(w)
+
+# ----------------------------------------------------------------------------
+# Build CMAs
+# ----------------------------------------------------------------------------
+def build_cmas(excess_df):
+    """End-to-end CMA build. Returns expected returns and covariance."""
+    cov = covariance(excess_df)
+    bench = benchmark_weights()
+    mu_table = expected_returns(excess_df, cov, bench)
+    return mu_table, cov
