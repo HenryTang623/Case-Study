@@ -28,7 +28,7 @@ import pandas as pd
 import cvxpy as cp
 from scipy.optimize import minimize
 
-from cma import EQUITY, FIXED_INCOME, RISK_ASSETS, MONTHS
+from ai.cma import EQUITY, FIXED_INCOME, RISK_ASSETS, MONTHS
 
 
 @dataclass
