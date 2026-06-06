@@ -102,9 +102,8 @@ def benchmark_weights():
 # ----------------------------------------------------------------------------
 # Build CMAs
 # ----------------------------------------------------------------------------
-def build_cmas(excess_df):
+def build_cmas(excess_df, method='Historical'):
     """End-to-end CMA build. Returns expected returns and covariance."""
     cov = covariance(excess_df)
-    bench = benchmark_weights()
-    mu_table = expected_returns(excess_df, cov, bench)
+    mu_table = expected_returns(excess_df)[method]
     return mu_table, cov
