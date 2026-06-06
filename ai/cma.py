@@ -178,11 +178,11 @@ def benchmark_weights() -> pd.Series:
 
 
 def build_cmas(path: str, seed: int = SEED):
-    """End-to-end CMA build. Returns (mu_blend, cov, excess, diagnostics, mu_table)."""
+    """End-to-end CMA build. Returns (mu_historical, cov, excess, diagnostics, mu_table)."""
     raw = load_returns(path)
     excess = to_excess(raw)
     excess, hy_diag = backfill_hy(excess, seed=seed)
     cov = covariance(excess)                      # full sample after backfill
     bench = benchmark_weights()
     mu_table = expected_returns(excess, cov, bench)
-    return mu_table["Blend"], cov, excess, hy_diag, mu_table, raw
+    return mu_table["Historical"], cov, excess, hy_diag, mu_table, raw
