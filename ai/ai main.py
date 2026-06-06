@@ -10,7 +10,7 @@ Usage:  python main.py [path_to_xlsx]
 
 import numpy as np
 import pandas as pd
-from ai import cma, portcon as pc, cio
+import cma, portcon as pc, cio
 
 
 pd.set_option("display.width", 140)

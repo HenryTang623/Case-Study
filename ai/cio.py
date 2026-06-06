@@ -15,7 +15,7 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-from ai.cma import RISK_ASSETS, MONTHS, benchmark_weights
+from cma import RISK_ASSETS, MONTHS, benchmark_weights
 
 
 # ----------------------------------------------------------------------------
