@@ -103,7 +103,7 @@ def max_sharpe(mu, cov, cons):
         wv = w.value
         if wv is None:
             continue
-        sr = (mu.values @ wv) / np.sqrt(wv.T @ S @ wv)
+        sr = (mu.values @ wv) / np.sqrt(wv @ S @ wv)
         if sr > best_sr:
             best_sr, best_w = sr, wv
 

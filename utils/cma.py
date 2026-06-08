@@ -9,16 +9,13 @@ RISK_ASSETS = EQUITY + FIXED_INCOME
 CASH = "Cash"
 SEED = 623
 
-
 # ----------------------------------------------------------------------------
 # Loading & Preprocessing
 # ----------------------------------------------------------------------------
 def load_returns(path):
     return pd.read_excel(path, sheet_name="Monthly Return", index_col=0, parse_dates=True)
 
-
 def to_excess(df):
-    """Excess-over-cash returns for the 6 risk assets."""
     return df[RISK_ASSETS].sub(df[CASH], axis=0)
 
 def backfill_hy(excess_df, seed=SEED):
@@ -71,12 +68,8 @@ def backfill_hy(excess_df, seed=SEED):
 def _historical_mean(excess_df):
     return excess_df.mean() * 12
 
-# TODO: add other methods to estimate expected returns
-
 def expected_returns(excess_df):
     hist = _historical_mean(excess_df)
-    # TODO: other methods
-
     return pd.DataFrame({
         "Historical": hist
     })
@@ -85,7 +78,7 @@ def expected_returns(excess_df):
 # Covariance
 # ----------------------------------------------------------------------------
 def covariance(excess_df):
-    """Ledoit-Wolf shrunk covariance (annualized)."""
+    """ann. Ledoit-Wolf shrunk covariance."""
     lw = LedoitWolf().fit(excess_df.values)
     lw_df = pd.DataFrame(lw.covariance_ * 12, index=excess_df.columns, columns=excess_df.columns)
     return lw_df
